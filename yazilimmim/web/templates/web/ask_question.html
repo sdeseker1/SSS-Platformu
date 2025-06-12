@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soru Sor</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .question-container {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            animation: slideIn 0.7s ease forwards;
+            width: 360px;
+            text-align: center;
+            color: white;
+        }
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            margin-bottom: 25px;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            resize: none;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #764ba2;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #5a3680;
+        }
+    </style>
+</head>
+<body>
+   <div class="question-container">
+    <h2>Soru Sor</h2>
+
+    {% if question_sent %}
+        <p style="color: green;">Sorunuz yetkiliye iletildi.</p>
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+            <textarea name="question" placeholder="Sorunuzu yazın..." required></textarea>
+            <button type="submit">Sor</button>
+        </form>
+    {% endif %}
+</div>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel - SSS Platformu</title>
+    <style>
+        body {
+            background: #121212;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        header, footer {
+            text-align: center;
+        }
+
+        nav a {
+            color: #f0f0f0;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 15px;
+            vertical-align: top;
+        }
+
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 25px;
+            padding: 8px 18px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SSS Platformu - Admin Panel</h1>
+    <nav>
+        <a href="{% url 'home' %}">Anasayfa</a> |
+        <a href="{% url 'sss' %}">SSS</a> |
+        <a href="{% url 'ask_question' %}">Soru Sor</a> |
+        <a href="{% url 'admin_panel' %}">Admin Panel</a>
+    </nav>
+    <hr>
+</header>
+
+<main>
+    <h2>Yanıtlanmamış Sorular</h2>
+    {% if pending_questions %}
+    <table>
+        <tr>
+            <th>Soru</th>
+            <th>Cevapla</th>
+        </tr>
+        {% for q in pending_questions %}
+        <tr>
+            <td>{{ q.question_text }}</td>
+            <td>
+                <form method="post" style="margin-bottom: 10px;">
+                    {% csrf_token %}
+                    <input type="hidden" name="question_id" value="{{ q.id }}">
+                    <textarea name="answer" required rows="3"></textarea>
+                    <div class="button-group">
+                        <button type="submit">Cevapla ve Yayınla</button>
+                </form>
+
+                <form method="post" action="{% url 'delete_question' q.id %}">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Bu soruyu silmek istediğinizden emin misiniz?')">Sil</button>
+                </form>
+                    </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>Şu anda yanıtlanmamış soru yok.</p>
+    {% endif %}
+</main>
+
+<footer>
+    <hr>
+    <p>&copy; 2025 SSS Platformu</p>
+</footer>
+
+</body>
+</html>

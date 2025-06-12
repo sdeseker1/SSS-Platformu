@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Üniversite SSS Platformu</title>
+    <style>
+        body {
+            background: #121212;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease forwards;
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+            animation: popIn 1s ease forwards;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: slideInDown 1s ease forwards;
+        }
+        p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 30px;
+            animation: slideInUp 1s ease forwards;
+        }
+        .button-container {
+            display: flex;
+            gap: 15px;
+            animation: fadeInUp 1s ease forwards;
+        }
+        button {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        @keyframes popIn {
+            0% {opacity: 0; transform: scale(0.5);}
+            100% {opacity: 1; transform: scale(1);}
+        }
+        @keyframes slideInDown {
+            0% {opacity: 0; transform: translateY(-40px);}
+            100% {opacity: 1; transform: translateY(0);}
+        }
+        @keyframes slideInUp {
+            0% {opacity: 0; transform: translateY(40px);}
+            100% {opacity: 1; transform: translateY(0);}
+        }
+        @keyframes fadeInUp {
+            0% {opacity: 0; transform: translateY(20px);}
+            100% {opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yurt.dpu.edu.tr/app/views/panel/assets/img/dpu-logo.png" alt="DPÜ Logo" class="logo" />
+
+    <h1>Üniversite SSS Platformu</h1>
+    <p>
+        Projenin amacı, üniversite öğrencileri ve adaylarının sık karşılaştıkları sorulara kolayca erişim sağlamaktır.
+    </p>
+    <div class="button-container">
+        <button onclick="window.location.href='ask/'">Soru Sor</button>
+        <button onclick="window.location.href='/accounts/login/'">Giriş Yap</button>
+        <button onclick="window.location.href='/register/'">Kayıt Ol</button>
+    </div>
+</body>
+</html>

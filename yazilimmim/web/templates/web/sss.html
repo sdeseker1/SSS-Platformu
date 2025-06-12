@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sıkça Sorulan Sorular</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .faq-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            width: 90%;
+            max-width: 800px;
+            padding: 40px 50px;
+            border-radius: 16px;
+            color: white;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            animation: slideIn 0.6s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .search-bar {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-bar input {
+            width: 70%;
+            max-width: 400px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        .search-bar button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #ffffff;
+            color: #764ba2;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .category-filter {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .category-filter select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+            outline: none;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .faq-item h4 {
+            margin: 0 0 10px;
+            color: #ffffff;
+        }
+        .faq-item p {
+            margin: 0;
+            color: #e0e0e0;
+            line-height: 1.5;
+            white-space: pre-wrap; /* Satırları korur */
+        }
+        .count {
+            font-size: 14px;
+            font-style: italic;
+            color: #ccc;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="faq-container">
+        <h2>Sıkça Sorulan Sorular</h2>
+
+        <!-- Arama çubuğu -->
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" name="q" placeholder="Bir soru ara..." value="{{ request.GET.q|default_if_none:'' }}">
+                <button type="submit">Ara</button>
+            </form>
+        </div>
+
+        <!-- Kategori filtresi -->
+        {% if categories %}
+        <div class="category-filter">
+            <form method="GET">
+                <select name="category" onchange="this.form.submit()">
+                    <option value="">Tüm Kategoriler</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id|stringformat:"s" == request.GET.category %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        {% endif %}
+
+        <!-- Arama sonucu mesajı -->
+        {% if request.GET.q %}
+        <p style="text-align:center;">"{{ request.GET.q }}" için sonuçlar:</p>
+        {% endif %}
+
+        <!-- Soru listesi -->
+        {% if questions %}
+            {% for question in questions %}
+            <div class="faq-item">
+                <h4>{{ question.title }}
+                    {% if question.count %}
+                    <span class="count">({{ question.count }} kez soruldu)</span>
+                    {% endif %}
+                </h4>
+                <p>{{ question.content }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align:center;">Hiç cevaplanmış soru bulunamadı.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

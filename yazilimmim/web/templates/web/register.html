@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kayıt Ol</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #121212;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-box {
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            width: 360px;
+        }
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+        .register-box label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .register-box input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #2a2a2a;
+            color: #f0f0f0;
+        }
+        .register-box button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .register-box button:hover {
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="register-box">
+        <h2>Kayıt Ol</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_username">Kullanıcı Adı</label>
+            {{ form.username }}
+
+            <label for="id_password1">Şifre</label>
+            {{ form.password1 }}
+
+            <label for="id_password2">Şifre (Tekrar)</label>
+            {{ form.password2 }}
+
+            <button type="submit">Kayıt Ol</button>
+        </form>
+    </div>
+</body>
+</html>
